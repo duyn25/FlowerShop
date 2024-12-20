@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data.SqlClient;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace FLowerShop.User
 {
@@ -11,32 +8,87 @@ namespace FLowerShop.User
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+           
 
         }
+        
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            string email = txtEmail.Text;
-            string password = txtPassword.Text;
+            string email = txtEmail.Text.Trim();
+            string password = txtPassword.Text.Trim();
 
-            // Kiểm tra thông tin đăng nhập (dùng cơ sở dữ liệu hoặc logic đăng nhập)
-            if (IsValidLogin(email, password))
+            // Kiểm tra thông tin đăng nhập
+            var user = GetUser(email, password);
+
+            if (user != null)
             {
-                // Chuyển hướng đến trang chính sau khi đăng nhập thành công
+                // Lưu thông tin người dùng vào Session
+                Session["UserName"] = user.FullName;
+                Session["UserEmail"] = email;
+
+                // Chuyển hướng đến trang chủ
                 Response.Redirect("Home.aspx");
             }
             else
             {
-                // Hiển thị thông báo lỗi nếu thông tin không hợp lệ
-                Response.Write("<script>alert('Thông tin đăng nhập không hợp lệ');</script>");
+                // Hiển thị thông báo lỗi
+                msg.Text = "Email hoặc mật khẩu không đúng!";
             }
         }
 
-        private bool IsValidLogin(string email, string password)
+        private User GetUser(string email, string password)
         {
-            // Kiểm tra thông tin đăng nhập với cơ sở dữ liệu
-            // (Thực hiện truy vấn cơ sở dữ liệu để xác thực thông tin)
-            return email == "user@example.com" && password == "password"; // Placeholder, thay thế bằng logic thực tế
+            User user = null;
+            string connectionString = "Data Source=LAPTOP-KDQJ22JT\\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True";
+            string query = "SELECT first_name, last_name, password FROM Customer WHERE email = @Email";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Email", email);
+
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string storedPassword = reader["password"].ToString();
+
+                        // Kiểm tra mật khẩu nhập vào
+                        if (VerifyPassword(password, storedPassword))
+                        {
+                            string firstName = reader["first_name"].ToString();
+                            string lastName = reader["last_name"].ToString();
+                            user = new User
+                            {
+                                FullName = $"{firstName} {lastName}"
+                            };
+                        }
+                    }
+                }
+            }
+
+            return user;
+        }
+
+        private bool VerifyPassword(string enteredPassword, string storedPassword)
+        {
+            string hashedPassword = HashPassword(enteredPassword);
+            return hashedPassword == storedPassword;
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(bytes);
+            }
         }
     }
+
+    public class User
+    {
+        public string FullName { get; set; }
+    }
 }
-    

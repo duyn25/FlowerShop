@@ -24,5 +24,6 @@
                 </td>
             </tr>
         </table>
-    
+      <asp:Label ID="msg" runat="server"></asp:Label>
+        
 </asp:Content>

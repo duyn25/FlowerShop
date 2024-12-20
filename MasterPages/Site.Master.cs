@@ -11,7 +11,16 @@ namespace FLowerShop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+        }
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            // Xóa toàn bộ Session
+            Session.Clear();
+            Session.Abandon();
 
+            // Điều hướng về trang Home
+            Response.Redirect("./Home.aspx");
         }
     }
 }
