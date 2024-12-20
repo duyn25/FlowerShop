@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="ProductList.aspx.cs" Inherits="FLowerShop.User.ProductList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="CategoryList.aspx.cs" Inherits="FLowerShop.User.CategoryList" %>
 <asp:Content ID="sibebar" ContentPlaceHolderID="SideBar" runat="server">
         <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
     <h6 class="m-0">Danh mục sản phẩm</h6>
@@ -10,11 +10,10 @@
        
         <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource2">
             <ItemTemplate>
-                 <a href='/CategoryList.aspx?category_id=<%#Eval("category_id") %>' class="nav-item nav-link"><%#Eval("name") %></a>
+                 <a href='/User/CategoryList.aspx?category_id=<%#Eval("category_id") %>' class="nav-item nav-link"><%#Eval("name") %></a>
             </ItemTemplate>
 
         </asp:Repeater>
-
 <asp:SqlDataSource 
     ID="SqlDataSource2" 
     runat="server" 
@@ -49,12 +48,21 @@
                                 </div>
                             </div>      
         </ItemTemplate>
+
     </asp:DataList>
     <asp:SqlDataSource 
     ID="SqlDataSource1" 
     runat="server" 
     ConnectionString="Data Source=LAPTOP-KDQJ22JT\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True" 
     ProviderName="System.Data.SqlClient" 
-    SelectCommand="SELECT * FROM [Product]">
+    SelectCommand="SELECT * FROM [Product] where category_id = @category_id">
+        <SelectParameters>
+            <asp:QueryStringParameter Name="category_id" Type="Int16" QueryStringField="category_id" />
+        </SelectParameters>
 </asp:SqlDataSource>
+
+
+
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 </asp:Content>

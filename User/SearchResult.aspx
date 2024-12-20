@@ -1,35 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="ProductList.aspx.cs" Inherits="FLowerShop.User.ProductList" %>
-<asp:Content ID="sibebar" ContentPlaceHolderID="SideBar" runat="server">
-        <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-    <h6 class="m-0">Danh mục sản phẩm</h6>
-    <i class="fa fa-angle-down text-dark"></i>
-</a>
-<nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-       
-       
-        <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource2">
-            <ItemTemplate>
-                 <a href='/CategoryList.aspx?category_id=<%#Eval("category_id") %>' class="nav-item nav-link"><%#Eval("name") %></a>
-            </ItemTemplate>
-
-        </asp:Repeater>
-
-<asp:SqlDataSource 
-    ID="SqlDataSource2" 
-    runat="server" 
-    ConnectionString="Data Source=LAPTOP-KDQJ22JT\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True" 
-    ProviderName="System.Data.SqlClient" 
-    SelectCommand="SELECT * FROM [Category]">
-</asp:SqlDataSource>
-       
-    </div>
-</nav>
-</asp:Content>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="SearchResult.aspx.cs" Inherits="FLowerShop.User.SearchResult" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="SubContent" runat="server">
     <h4>Danh sách sản phẩm</h4>
     <asp:DataList ID="DataList1" runat="server" 
-        DataKeyField="product_id" DataSourceID="SqlDataSource1"
+        DataKeyField="product_id" DataSourceID="SqlDataSourceSearch"
         RepeatColumns="4" RepeatDirection="Horizontal"
         >
         <ItemTemplate>
@@ -49,12 +22,20 @@
                                 </div>
                             </div>      
         </ItemTemplate>
+
     </asp:DataList>
     <asp:SqlDataSource 
-    ID="SqlDataSource1" 
+    ID="SqlDataSourceSearch" 
     runat="server" 
     ConnectionString="Data Source=LAPTOP-KDQJ22JT\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True" 
     ProviderName="System.Data.SqlClient" 
-    SelectCommand="SELECT * FROM [Product]">
+    SelectCommand="SELECT * FROM [Product] WHERE [name] LIKE '%' + @keyword + '%'">
+    <SelectParameters>
+        <asp:QueryStringParameter Name="keyword" Type="String" QueryStringField="keyword" />
+    </SelectParameters>
 </asp:SqlDataSource>
+
+
+
 </asp:Content>
+

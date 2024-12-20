@@ -1,6 +1,33 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="FLowerShop.User.Home" %>
+<asp:Content ID="sibebar" ContentPlaceHolderID="SideBar" runat="server">
+        <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+    <h6 class="m-0">Danh mục sản phẩm</h6>
+    <i class="fa fa-angle-down text-dark"></i>
+</a>
+<nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+       
+       
+        <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource2">
+            <ItemTemplate>
+                 <a href='/User/CategoryList.aspx?category_id=<%#Eval("category_id") %>' class="nav-item nav-link"><%#Eval("name") %></a>
+            </ItemTemplate>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="SubContent" runat="server">
+        </asp:Repeater>
+
+        <asp:SqlDataSource 
+            ID="SqlDataSource2" 
+            runat="server" 
+            ConnectionString="Data Source=LAPTOP-KDQJ22JT\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True" 
+            ProviderName="System.Data.SqlClient" 
+            SelectCommand="SELECT * FROM [Category]">
+        </asp:SqlDataSource>
+       
+    </div>
+</nav>
+</asp:Content>
+ <asp:Content ID="Content2" ContentPlaceHolderID="SubContent" runat="server">
+
     <div id="header-carousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active" style="height: 410px;">
