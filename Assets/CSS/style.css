@@ -30,7 +30,9 @@
   --font-family-sans-serif: "Poppins", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-
+.SubContent{
+    height:500px;
+}
 *,
 *::before,
 *::after {
