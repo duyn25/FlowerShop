@@ -2,7 +2,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="SubContent" runat="server">
 
     <div class="row">
-       
         <div class="col-lg-8 pb-2">
             <div id="product-carousel">
                 <div class="carousel-inner border">
@@ -19,48 +18,31 @@
             <h3 class="font-weight-semi-bold mb-4">
                 Giá: <asp:Label ID="lblPrice" runat="server" CssClass="text-danger" />
             </h3>
-            Mô tả: 
+            Mô tả:
             <asp:Label ID="lblDescription" runat="server" CssClass="text-muted" />
             <p class="mr-3">Còn: <asp:Label ID="lblStock" runat="server" CssClass="text-success" /></p>
 
             <div class="d-flex align-items-center mb-4 pt-2">
+                Số lượng:
                 <div class="input-group quantity mr-3" style="width: 130px;">
                     <div class="input-group-btn">
-                        <button class="btn btn-primary btn-minus" onclick="changeQuantity(-1)">
+                        <button class="btn btn-primary btn-minus">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input id="quantity" type="text" class="form-control bg-secondary text-center" value="1" />
+                    <input id="quantity" type="text" class="form-control bg-secondary text-center" value="1" runat="server" />                    
                     <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus" onclick="changeQuantity(1)">
+                        <button class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
                 <asp:Button ID="btnAddToCart" runat="server" CssClass="btn btn-primary px-3" Text="Thêm vào giỏ" OnClick="btnAddToCart_Click" />
-                <asp:Label ID="lblErrorMessage" runat="server"></asp:Label>
+                <asp:HiddenField ID="hiddenProductId" runat="server" Value='<%# Eval("ProductId") %>' />
+                
             </div>
+            <asp:Label ID="lblErrorMessage" runat="server"></asp:Label>
         </div>
     </div>
-
-    <script>
-        function changeQuantity(amount) {
-            var quantityField = document.getElementById('quantity');
-            var currentQuantity = parseInt(quantityField.value);
-
-         
-            currentQuantity += amount;
-
-            if (currentQuantity < 1) {
-                currentQuantity = 1;
-            }
-
-          
-            quantityField.value = currentQuantity;
-            event.preventDefault();
-           
-           
-        }
-</script>
-
+    <script src="../Assets/js/productdetail.js"></script>
 </asp:Content>

@@ -10,7 +10,7 @@
        
         <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDataSource2">
             <ItemTemplate>
-                 <a href='/CategoryList.aspx?category_id=<%#Eval("category_id") %>' class="nav-item nav-link"><%#Eval("name") %></a>
+                 <a href='/User/CategoryList.aspx?category_id=<%#Eval("category_id") %>' class="nav-item nav-link"><%#Eval("name") %></a>
             </ItemTemplate>
 
         </asp:Repeater>
@@ -40,12 +40,11 @@
                                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                      <asp:Label ID="nameLabel" runat="server" Text='<%# Eval("name") %>' />
                                     <div class="d-flex justify-content-center">
-                                     Giá bán:<asp:Label ID="priceLabel" runat="server" Text='<%# Eval("price") %>' />
+                                     Giá bán: <asp:Label ID="priceLabel" runat="server" Text='<%# String.Format("{0:#,##0} VND", Eval("price")) %>' />
                                     </div>
                                 </div>
-                                <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href='ProductDetails.aspx?product_id=<%# Eval("product_id") %>' class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Chi tiết</a>
-                                    <a href="Cart.aspx" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
+                                <div class="card-footer d-flex justify-content-center bg-light border">
+                                    <a href='ProductDetails.aspx?product_id=<%# Eval("product_id") %>' class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem Chi tiết</a>
                                 </div>
                             </div>      
         </ItemTemplate>
@@ -56,5 +55,5 @@
     ConnectionString="Data Source=LAPTOP-KDQJ22JT\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True" 
     ProviderName="System.Data.SqlClient" 
     SelectCommand="SELECT * FROM [Product]">
-</asp:SqlDataSource>
+    </asp:SqlDataSource>
 </asp:Content>

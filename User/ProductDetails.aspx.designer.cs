@@ -60,6 +60,15 @@ namespace FLowerShop.User
         protected global::System.Web.UI.WebControls.Label lblStock;
 
         /// <summary>
+        /// quantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText quantity;
+
+        /// <summary>
         /// btnAddToCart control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace FLowerShop.User
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddToCart;
+
+        /// <summary>
+        /// hiddenProductId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenProductId;
 
         /// <summary>
         /// lblErrorMessage control.

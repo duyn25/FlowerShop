@@ -15,6 +15,15 @@ namespace FLowerShop
     {
 
         /// <summary>
+        /// cartBadge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cartBadge;
+
+        /// <summary>
         /// SideBar control.
         /// </summary>
         /// <remarks>

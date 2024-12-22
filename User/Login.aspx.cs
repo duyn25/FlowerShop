@@ -16,18 +16,18 @@ namespace FLowerShop.User
         {
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
-
-            // Kiểm tra thông tin đăng nhập
+           
+            
             var user = GetUser(email, password);
 
             if (user != null)
             {
                 // Lưu thông tin người dùng vào Session
-                Session["UserName"] = user.FullName;
-                Session["UserEmail"] = email;
-
+                Session["CustomerName"] = user.FullName;
+                Session["CustomerEmail"] = email;
+                Session["CustomerID"] = user.User_id;
                 // Chuyển hướng đến trang chủ
-                Response.Redirect("Home.aspx");
+                Response.Redirect("ProductList.aspx");
             }
             else
             {
@@ -40,7 +40,7 @@ namespace FLowerShop.User
         {
             User user = null;
             string connectionString = "Data Source=LAPTOP-KDQJ22JT\\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True";
-            string query = "SELECT first_name, last_name, password FROM Customer WHERE email = @Email";
+            string query = "SELECT customer_id, first_name, last_name, password FROM Customer WHERE email = @Email";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -59,9 +59,11 @@ namespace FLowerShop.User
                         {
                             string firstName = reader["first_name"].ToString();
                             string lastName = reader["last_name"].ToString();
+                            string customer_id = reader["customer_id"].ToString();
                             user = new User
                             {
-                                FullName = $"{firstName} {lastName}"
+                                FullName = $"{firstName} {lastName}",
+                                User_id = $"{customer_id}"
                             };
                         }
                     }
@@ -90,5 +92,6 @@ namespace FLowerShop.User
     public class User
     {
         public string FullName { get; set; }
+        public string User_id { get; set; }
     }
 }

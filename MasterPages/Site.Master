@@ -101,7 +101,7 @@
                     </a>
                     <a href="../User/Cart.aspx" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">0</span>
+                        <span class="badge" id="cartBadge" runat="server">0</span>
                     </a>
                 </div>
             </div>
@@ -133,9 +133,9 @@
                             <a href="../User/About.aspx" class="nav-item nav-link">Về chúng tôi</a>
                         </div>
                         <div class=" navbar-nav ml-auto py-0 p-4">
-                            <% if (Session["UserEmail"] != null) { %>                  
+                            <% if (Session["CustomerEmail"] != null) { %>                  
                                     <i class="fa fa-user mr-3"></i>
-                                    <div class="mr-3"><%: Session["UserName"] %></div>
+                                    <div class="mr-3"><%: Session["CustomerName"] %></div>
                                      <asp:Button ID="btnLogout" runat="server" Text="Đăng xuất" CssClass="btn btn-sm btn-outline-danger ms-3" OnClick="btnLogout_Click" />                               
                             <% } else { %>
                                 <a href="../User/Login.aspx" class="nav-item nav-link">Đăng nhập</a>
