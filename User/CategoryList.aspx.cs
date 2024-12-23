@@ -13,13 +13,11 @@ namespace FLowerShop.User
         {
             if (!IsPostBack)
             {
-                // Kiểm tra nếu có tham số category_id trong QueryString
                 if (Request.QueryString["category_id"] != null)
                 {
                     int categoryId;
                     if (int.TryParse(Request.QueryString["category_id"], out categoryId))
                     {
-                        // Cập nhật câu lệnh SQL để sử dụng category_id đã chọn
                         SqlDataSource1.SelectParameters["category_id"].DefaultValue = categoryId.ToString();
                     }
                 }

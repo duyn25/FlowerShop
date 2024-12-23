@@ -11,9 +11,9 @@
                 <tr class="bg-secondary text-dark">
                     <th>Order ID</th>
                     <th>Ngày đặt hàng</th>
-                    <th>Sản phẩm</th>
+                    <th>Danh sách sản phẩm</th>
                     <th>Số lượng</th>
-                    <th>Tổng giá</th>
+                    <th>Tổng</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,8 +22,8 @@
         <tr>
             <td><%# Eval("order_id") %></td>
             <td><%# Eval("order_date", "{0:dd/MM/yyyy}") %></td>
-             <td><%# Eval("product_names") %></td> <!-- Hiển thị tên các sản phẩm -->
-             <td><%# Eval("total_quantity") %></td> <!-- Hiển thị tổng số lượng -->
+             <td><%# Eval("product_names") %></td> 
+             <td><%# Eval("total_quantity") %></td>
             <td><%# string.Format("{0:N0} VND", Eval("total_price")) %></td>
 
         </tr>

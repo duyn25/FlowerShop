@@ -1,4 +1,4 @@
-/******* Bootstrap Theming ********/
+﻿/******* Bootstrap Theming ********/
 
 :root {
   --blue: #007bff;
@@ -5828,6 +5828,7 @@ a.close.disabled {
 
 .carousel {
   position: relative;
+ 
 }
 
 .carousel.pointer-event {
@@ -9575,4 +9576,9 @@ a.text-dark:hover, a.text-dark:focus {
   100% {
     transform: translateY(-15px);
   }
+}
+.datalist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Khoảng cách giữa các phần tử */
 }

@@ -108,11 +108,15 @@ namespace FLowerShop.User
             int cart_quantity = Convert.ToInt32(quantity.Value);
             Customer customer = (Customer)Session["Customer"];
 
-            int customerId =customer.CustomerId;
-            if (!IsCustomerValid(customerId))
-            {              
+           
+            if (customer == null)  // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            {
                 Response.Redirect("Login.aspx");
+                return;  // Dừng lại sau khi chuyển hướng
             }
+
+            // Nếu đã đăng nhập, tiếp tục thêm sản phẩm vào giỏ hàng
+            int customerId = customer.CustomerId;
             AddToCart(customerId, productId, cart_quantity);
         }
 
@@ -140,30 +144,6 @@ namespace FLowerShop.User
                     catch (Exception ex)
                     {
                         ShowErrorMessage("Lỗi khi kiểm tra sản phẩm: " + ex.Message);
-                        return false;
-                    }
-                }
-            }
-        }
-        private bool IsCustomerValid(int customerId)
-        {
-            string connectionString = "Data Source=LAPTOP-KDQJ22JT\\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True";
-            string query = "SELECT COUNT(*) FROM Customer WHERE customer_id = @CustomerId";
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@CustomerId", customerId);
-
-                    try
-                    {
-                        conn.Open();
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
-                        return count > 0;
-                    }
-                    catch
-                    {
                         return false;
                     }
                 }

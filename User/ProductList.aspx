@@ -28,25 +28,25 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="SubContent" runat="server">
     <h4>Danh sách sản phẩm</h4>
-    <asp:DataList ID="DataList1" runat="server" 
+    <asp:DataList ID="DataList1" runat="server" CssClass="datalist-container" 
         DataKeyField="product_id" 
         RepeatColumns="4" RepeatDirection="Horizontal"
         >
         <ItemTemplate>
-                            <div class="card product-item border-0 mb-4">
-                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                   <asp:Image ID="img" runat="server" ImageUrl='<%#"~/Assets/Images/"+Eval("image") %>' Width="230" Height="250" />
-                                 </div>
-                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Eval("name") %>' />
-                                    <div class="d-flex justify-content-center">
-                                     Giá bán: <asp:Label ID="priceLabel" runat="server" Text='<%# String.Format("{0:#,##0} VND", Eval("price")) %>' />
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex justify-content-center bg-light border">
-                                    <a href='ProductDetails.aspx?product_id=<%# Eval("product_id") %>' class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem Chi tiết</a>
-                                </div>
-                            </div>      
+            <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <asp:Image ID="img" runat="server" ImageUrl='<%#"~/Assets/Images/"+Eval("image") %>' Width="230" Height="250" />
+                    </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <asp:Label ID="nameLabel" runat="server" Text='<%# Eval("name") %>' />
+                    <div class="d-flex justify-content-center">
+                        Giá bán: <asp:Label ID="priceLabel" runat="server" Text='<%# String.Format("{0:#,##0} VND", Eval("price")) %>' />
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-center bg-light border">
+                    <a href='ProductDetails.aspx?product_id=<%# Eval("product_id") %>' class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem Chi tiết</a>
+                </div>
+            </div>      
         </ItemTemplate>
     </asp:DataList>
     <asp:SqlDataSource 
@@ -63,4 +63,5 @@
         <asp:Button ID="btnNext" runat="server" Text="Tiếp" OnClick="btnNext_Click" />
         <asp:Button ID="btnLast" runat="server" Text="Trang cuối" OnClick="btnLast_Click" />
     </div>
+    <script src="../Assets/CSS/style.css"></script>
 </asp:Content>

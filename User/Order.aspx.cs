@@ -18,7 +18,7 @@ namespace FLowerShop.User
             {
                 Response.Redirect("Login.aspx");
             }
-            Customer customer = (Customer)Session["Customer"];          
+            Customer customer = (Customer)Session["Customer"];
             txtho.Text = customer.FirstName;
             txtten.Text = customer.LastName;
             txtsdt.Text = customer.PhoneNumber;
@@ -102,6 +102,7 @@ namespace FLowerShop.User
                     {
                         try
                         {
+                            // Insert order into Order table
                             string orderQuery = "INSERT INTO [Order] (order_date, customer_id, total_price, status) " +
                                                 "VALUES (@OrderDate, @CustomerId, @TotalPrice, @Status); SELECT SCOPE_IDENTITY();";
                             int orderId;
@@ -116,6 +117,7 @@ namespace FLowerShop.User
                                 orderId = Convert.ToInt32(cmd.ExecuteScalar());
                             }
 
+                            // Loop through the cart items and insert them into Order_Item table
                             foreach (RepeaterItem item in Repeater1.Items)
                             {
                                 var productId = Convert.ToInt32(((HiddenField)item.FindControl("productId")).Value);
@@ -132,14 +134,27 @@ namespace FLowerShop.User
                                     cmd.Parameters.AddWithValue("@Quantity", quantity);
                                     cmd.Parameters.AddWithValue("@Price", price);
 
-                                    cmd.ExecuteNonQuery(); 
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                // Update quantity_sold in Product table
+                                string updateProductQuery = "UPDATE Product SET quantity_sold = quantity_sold + @Quantity WHERE product_id = @ProductId";
+
+                                using (SqlCommand cmd = new SqlCommand(updateProductQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                                    cmd.Parameters.AddWithValue("@Quantity", quantity);
+
+                                    cmd.ExecuteNonQuery();
                                 }
                             }
 
+                            // Commit the transaction
                             transaction.Commit();
                         }
                         catch (Exception ex)
                         {
+                            // Rollback in case of error
                             transaction.Rollback();
                             throw new Exception("Có lỗi xảy ra khi lưu đơn hàng: " + ex.Message);
                         }
@@ -153,8 +168,5 @@ namespace FLowerShop.User
                 lblMessage.Text = "Có lỗi xảy ra: " + ex.Message;
             }
         }
-
     }
-
-
 }
