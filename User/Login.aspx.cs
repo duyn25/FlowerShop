@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FLowerShop.Models;
+using System;
 using System.Data.SqlClient;
+using System.Web;
 using System.Web.UI;
 
 namespace FLowerShop.User
@@ -18,30 +20,25 @@ namespace FLowerShop.User
             string password = txtPassword.Text.Trim();
            
             
-            var user = GetUser(email, password);
+            Customer customer = GetCustomer(email, password);
 
-            if (user != null)
+            if (customer != null)
             {
-                // Lưu thông tin người dùng vào Session
-                Session["CustomerName"] = user.FullName;
-                Session["CustomerEmail"] = email;
-                Session["CustomerID"] = user.User_id;
-                // Chuyển hướng đến trang chủ
+                Session["Customer"] = customer;
+               
                 Response.Redirect("ProductList.aspx");
             }
             else
             {
-                // Hiển thị thông báo lỗi
                 msg.Text = "Email hoặc mật khẩu không đúng!";
             }
         }
 
-        private User GetUser(string email, string password)
+        private Customer GetCustomer(string email, string password)
         {
-            User user = null;
+            Customer customer = null;
             string connectionString = "Data Source=LAPTOP-KDQJ22JT\\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True";
-            string query = "SELECT customer_id, first_name, last_name, password FROM Customer WHERE email = @Email";
-
+            string query = "SELECT customer_id, first_name, last_name, password, address, phone_number FROM Customer WHERE email = @Email";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -52,25 +49,28 @@ namespace FLowerShop.User
                 {
                     if (reader.Read())
                     {
-                        string storedPassword = reader["password"].ToString();
-
-                        // Kiểm tra mật khẩu nhập vào
+                        string storedPassword = reader["password"].ToString();                    
                         if (VerifyPassword(password, storedPassword))
                         {
                             string firstName = reader["first_name"].ToString();
-                            string lastName = reader["last_name"].ToString();
+                            string lastName = reader["last_name"].ToString();                       
                             string customer_id = reader["customer_id"].ToString();
-                            user = new User
+                            string address = reader["address"].ToString();  
+                            string phone = reader["phone_number"].ToString();
+                            customer = new Customer
                             {
-                                FullName = $"{firstName} {lastName}",
-                                User_id = $"{customer_id}"
+                                CustomerId = Convert.ToInt32(customer_id),  
+                                FirstName = firstName,
+                                LastName = lastName,
+                                Address = address,  
+                                PhoneNumber = phone,      
+                                Email = email
                             };
                         }
                     }
                 }
             }
-
-            return user;
+            return customer;
         }
 
         private bool VerifyPassword(string enteredPassword, string storedPassword)
@@ -87,11 +87,5 @@ namespace FLowerShop.User
                 return Convert.ToBase64String(bytes);
             }
         }
-    }
-
-    public class User
-    {
-        public string FullName { get; set; }
-        public string User_id { get; set; }
     }
 }

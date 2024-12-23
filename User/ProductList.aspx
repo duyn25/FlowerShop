@@ -29,7 +29,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="SubContent" runat="server">
     <h4>Danh sách sản phẩm</h4>
     <asp:DataList ID="DataList1" runat="server" 
-        DataKeyField="product_id" DataSourceID="SqlDataSource1"
+        DataKeyField="product_id" 
         RepeatColumns="4" RepeatDirection="Horizontal"
         >
         <ItemTemplate>
@@ -50,10 +50,17 @@
         </ItemTemplate>
     </asp:DataList>
     <asp:SqlDataSource 
-    ID="SqlDataSource1" 
+    ID="SqlDataSource1"
     runat="server" 
     ConnectionString="Data Source=LAPTOP-KDQJ22JT\NDSCDL;Initial Catalog=FlowerShop;Integrated Security=True" 
     ProviderName="System.Data.SqlClient" 
-    SelectCommand="SELECT * FROM [Product]">
+    SelectCommand="SELECT * FROM [Product]"
+    >
     </asp:SqlDataSource>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+        <asp:Button ID="btnFirst" runat="server" Text="Trang đầu" OnClick="btnFirst_Click" />
+        <asp:Button ID="btnPrev" runat="server" Text="Trước" OnClick="btnPrev_Click" />
+        <asp:Button ID="btnNext" runat="server" Text="Tiếp" OnClick="btnNext_Click" />
+        <asp:Button ID="btnLast" runat="server" Text="Trang cuối" OnClick="btnLast_Click" />
+    </div>
 </asp:Content>

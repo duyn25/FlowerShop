@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FLowerShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace FLowerShop.User
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["CustomerID"] == null || string.IsNullOrEmpty(Session["CustomerID"].ToString()))
-            {
-                Response.Redirect("Login.aspx"); 
-            }
+            //if (Session["CustomerID"] == null || string.IsNullOrEmpty(Session["CustomerID"].ToString()))
+            //{
+            //    Response.Redirect("Login.aspx"); 
+            //}
             if (!IsPostBack)
             {
                 string productId = Request.QueryString["product_id"];
@@ -103,14 +104,14 @@ namespace FLowerShop.User
         }
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
-
             int productId = Convert.ToInt32(hiddenProductId.Value);
             int cart_quantity = Convert.ToInt32(quantity.Value);
-            int customerId = GetCustomerId();
+            Customer customer = (Customer)Session["Customer"];
+
+            int customerId =customer.CustomerId;
             if (!IsCustomerValid(customerId))
-            {
-                ShowErrorMessage("Vui lòng đăng nhập.");
-                return;
+            {              
+                Response.Redirect("Login.aspx");
             }
             AddToCart(customerId, productId, cart_quantity);
         }
@@ -199,11 +200,6 @@ namespace FLowerShop.User
                 }
             }
         }
-         private int GetCustomerId()
-         {
-            object customerId = HttpContext.Current.Session["CustomerID"];
-            return customerId != null ? Convert.ToInt32(customerId) : 0;        
-         }
         private void ShowErrorMessage(string message)
         {
             lblErrorMessage.Text = message;

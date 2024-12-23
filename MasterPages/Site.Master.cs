@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FLowerShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,15 +12,22 @@ namespace FLowerShop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["Customer"] != null)
+            {
+                // Lấy đối tượng Customer từ session
+                Customer customer = (Customer)Session["Customer"];
+                string fullName = customer.FirstName + " " + customer.LastName;
+
+               
+                lblFullname.Text = fullName;
+
+            }
         }
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            // Xóa toàn bộ Session
             Session.Clear();
             Session.Abandon();
 
-            // Điều hướng về trang Home
             Response.Redirect("./Home.aspx");
         }
     }

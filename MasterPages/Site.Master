@@ -133,10 +133,11 @@
                             <a href="../User/About.aspx" class="nav-item nav-link">Về chúng tôi</a>
                         </div>
                         <div class=" navbar-nav ml-auto py-0 p-4">
-                            <% if (Session["CustomerEmail"] != null) { %>                  
-                                    <i class="fa fa-user mr-3"></i>
-                                    <div class="mr-3"><%: Session["CustomerName"] %></div>
-                                     <asp:Button ID="btnLogout" runat="server" Text="Đăng xuất" CssClass="btn btn-sm btn-outline-danger ms-3" OnClick="btnLogout_Click" />                               
+                            <% if (Session["Customer"] != null) { %>                  
+                                    <i class="fa fa-user p-3"></i>
+                                    <div class="p-3"><asp:Label ID="lblFullname" runat="server"></asp:Label></div>
+                                    <a href="../User/History.aspx" class="nav-item nav-link">Lịch sử mua hàng</a>
+                                     <asp:Button ID="btnLogout" runat="server" Text="Đăng xuất" class="btn btn-sm btn-outline-danger ms-2" OnClick="btnLogout_Click" />                               
                             <% } else { %>
                                 <a href="../User/Login.aspx" class="nav-item nav-link">Đăng nhập</a>
                                 <a href="../User/Register.aspx" class="nav-item nav-link">Đăng ký</a>
