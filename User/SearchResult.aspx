@@ -16,9 +16,8 @@
                                      Giá bán:<asp:Label ID="priceLabel" runat="server" Text='<%# Eval("price") %>' />
                                     </div>
                                 </div>
-                                <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="ProductDetails.aspx" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                    <a href="Cart.aspx" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                <div class="card-footer d-flex justify-content-center bg-light border">
+                                <a href='ProductDetails.aspx?product_id=<%# Eval("product_id") %>' class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem Chi tiết</a>
                                 </div>
                             </div>      
         </ItemTemplate>
